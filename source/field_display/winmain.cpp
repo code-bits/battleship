@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "../battleship/stdafx.h"
 
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 

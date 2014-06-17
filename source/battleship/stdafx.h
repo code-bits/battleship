@@ -26,3 +26,4 @@
 #include "tools.h"
 #include "field.h"
 #include "message.h"
+#include "field_display.h"

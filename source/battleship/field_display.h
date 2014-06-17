@@ -2,6 +2,7 @@
 #pragma once
 
 #include <windows.h>
+#include "message.h"
 
 #define Rows				10
 #define Columns				10
@@ -12,12 +13,6 @@
 #define FldAreaLeft			200
 #define FldAreaBtm (Rows * CellWidth + FldAreaTop)
 #define FldAreaRgt (Columns * CellWidth + FldAreaLeft)
-
-struct CellCoord
-{
-	int row;
-	int col;
-};
 
 void DrawCell(HDC hdc, int value, int i, int j);
 

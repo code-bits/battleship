@@ -1,6 +1,6 @@
 
 #include "field_display.h"
-#include "../field_display/stdafx.h"
+#include "../battleship/stdafx.h"
 
 void DrawCell(HDC hdc, int value, int i, int j)
 {
