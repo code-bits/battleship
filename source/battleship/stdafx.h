@@ -20,7 +20,7 @@
 #include "viewport_window.h"
 #include "backbuffer.h"
 #include "mouse.h"
-#include "game.h"
+#include "application.h"
 #include "timer.h"
 #include "error.h"
 #include "tools.h"

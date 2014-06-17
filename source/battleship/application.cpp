@@ -1,21 +1,21 @@
 
-#include "game.h"
+#include "application.h"
 #include "stdafx.h"
 
 
-Game::Game()
+Application::Application()
 {
 
 }
 
 
-Game::~Game()
+Application::~Application()
 {
    
 }
 
 
-void Game::Init()
+void Application::Init()
 {
     INITCOMMONCONTROLSEX ctls;
     ctls.dwSize = sizeof(INITCOMMONCONTROLSEX);
@@ -35,8 +35,8 @@ void Game::Init()
     AdjustWindowRectEx(&rct, WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL, TRUE, WS_EX_OVERLAPPEDWINDOW);
 
     bool res = viewport.CreateEx(WS_EX_OVERLAPPEDWINDOW,
-        L"WP Lab 4",
-        L"WP Lab 4",
+        L"Battleship",
+        L"Battleship",
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0,
         rct.right - rct.left, rct.bottom - rct.top,
@@ -53,13 +53,13 @@ void Game::Init()
 }
 
 
-void Game::SceneInit()
+void Application::SceneInit()
 {
     
 }
 
 
-void Game::Run()
+void Application::Run()
 {
 
     MSG msg;
@@ -98,7 +98,7 @@ void Game::Run()
 }
 
 
-void Game::GetInput(int message, WPARAM wParam, LPARAM lParam)
+void Application::GetInput(int message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
@@ -125,24 +125,24 @@ void Game::GetInput(int message, WPARAM wParam, LPARAM lParam)
 }
 
 
-void Game::OnLeftButtonDown()
+void Application::OnLeftButtonDown()
 {
 }
 
 
-void Game::OnRightButtonDown()
+void Application::OnRightButtonDown()
 {
     needUpdate = true;
 }
 
 
-void Game::Update()
+void Application::Update()
 {
    
 }
 
 
-void Game::Render(double inFrame)
+void Application::Render(double inFrame)
 {
    
 }

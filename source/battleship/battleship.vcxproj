@@ -82,7 +82,7 @@
     <ClCompile Include="field.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="backbuffer.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -99,7 +99,8 @@
     <ClInclude Include="message.h" />
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="error.h" />
-    <ClInclude Include="game.h" />
+    <ClInclude Include="events.h" />
+    <ClInclude Include="application.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="timer.h" />

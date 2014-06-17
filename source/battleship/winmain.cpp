@@ -16,21 +16,21 @@ LPCWSTR g_viewportWinClassName = L"viewport";
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
-    Game* game = NULL;
+    Application* app = NULL;
 
     try
     {
-        game = new Game();
+        app = new Application();
 
-        game->Init();
-        game->SceneInit();
-        game->Run();
+        app->Init();
+        app->SceneInit();
+        app->Run();
     }
     catch (const Error& e)
     {
         cout << e.What();
     }
 
-    if (game) { delete game; }
+    if (app) { delete app; }
     return 0;
 }

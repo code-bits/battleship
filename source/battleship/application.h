@@ -7,11 +7,11 @@
 #include <vector>
 
 
-class Game
+class Application
 {
 public:
-    Game();
-    virtual ~Game();
+    Application();
+    virtual ~Application();
     virtual void Init();
     virtual void SceneInit();
     virtual void Run();

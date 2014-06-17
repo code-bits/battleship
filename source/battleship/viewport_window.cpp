@@ -13,7 +13,6 @@ void ViewportWindow::FillWndClassEx(WNDCLASSEX & wcex)
 {
     wcex.style          = CS_HREDRAW | CS_VREDRAW;
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW);
-	wcex.lpszMenuName	= L"Lab4";
 }
 
 
