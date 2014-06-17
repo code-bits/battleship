@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <windows.h>
@@ -9,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <cmath>
 #include <io.h>
@@ -24,5 +24,5 @@
 #include "timer.h"
 #include "error.h"
 #include "tools.h"
-
-
+#include "field.h"
+#include "message.h"
