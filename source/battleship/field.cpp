@@ -1,5 +1,5 @@
 #include "field.h"
-
+#include "stdafx.h"
 CellState Field::Get(int x, int y)
 {
 	return field[x][y-1];
