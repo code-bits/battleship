@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="field_display.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="backbuffer.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="field_display.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="backbuffer.h" />
