@@ -84,6 +84,7 @@
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -102,6 +103,7 @@
     <ClInclude Include="events.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tools.h" />
