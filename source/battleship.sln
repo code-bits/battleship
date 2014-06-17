@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "battleship", "battleship\battleship.vcxproj", "{2B7893CA-7B91-4356-823F-FE3C09E94B68}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "field_display", "field_display\field_display.vcxproj", "{7E26B03C-D727-472F-AD4D-1A2FE80AD168}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{2B7893CA-7B91-4356-823F-FE3C09E94B68}.Debug|Win32.Build.0 = Debug|Win32
 		{2B7893CA-7B91-4356-823F-FE3C09E94B68}.Release|Win32.ActiveCfg = Release|Win32
 		{2B7893CA-7B91-4356-823F-FE3C09E94B68}.Release|Win32.Build.0 = Release|Win32
+		{7E26B03C-D727-472F-AD4D-1A2FE80AD168}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E26B03C-D727-472F-AD4D-1A2FE80AD168}.Debug|Win32.Build.0 = Debug|Win32
+		{7E26B03C-D727-472F-AD4D-1A2FE80AD168}.Release|Win32.ActiveCfg = Release|Win32
+		{7E26B03C-D727-472F-AD4D-1A2FE80AD168}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
