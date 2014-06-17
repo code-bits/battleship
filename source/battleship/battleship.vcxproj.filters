@@ -21,7 +21,14 @@
     <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="field_display.cpp">
+=======
+    <ClCompile Include="field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="message.cpp">
+>>>>>>> dc66403bf9a26bafb5ff06cff01358785e6b14d8
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="backbuffer.cpp">
@@ -50,7 +57,14 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="field_display.h">
+=======
+    <ClInclude Include="field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="message.h">
+>>>>>>> dc66403bf9a26bafb5ff06cff01358785e6b14d8
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="backbuffer.h">
