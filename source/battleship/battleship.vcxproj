@@ -95,6 +95,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cell.h" />
     <ClInclude Include="field_display.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="message.h" />

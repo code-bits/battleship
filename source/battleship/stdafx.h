@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <commctrl.h>
+#include <algorithm>
 #include <iostream>
 #include <list>
 #include <vector>
@@ -27,3 +28,5 @@
 #include "field.h"
 #include "message.h"
 #include "field_display.h"
+#include "cell.h"
+#include "player.h"

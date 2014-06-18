@@ -1,12 +1,7 @@
 #pragma once
 
 #include <string>
-
-struct CellCoord
-{
-	int row;
-	int col;
-};
+#include "cell.h"
 
 class Message
 {
