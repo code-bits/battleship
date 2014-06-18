@@ -7,7 +7,7 @@
 #define Rows				10
 #define Columns				10
 
-#define CellWidth			35
+#define CellWidth			25
 
 #define FldAreaTop			25
 #define FldAreaLeft			200
@@ -20,4 +20,4 @@ void DrawField(HDC hdc, int ** field_array);
 
 bool IsInArea(POINT point, RECT rect);
 
-bool CheckCell(HWND hwnd, CellCoord cCoord, int ** field_array);
+bool MyCheckCell(HWND hwnd, CellCoord cCoord, int ** field_array);
