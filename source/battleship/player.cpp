@@ -5,7 +5,7 @@
 
 void Player::SendCheckToAdversary(CellCoord cc)
 {
-	if (mayMove)
+	if (canMove)
 	{
 		adversary->CheckIfHit(cc);
 	}	
@@ -14,19 +14,19 @@ void Player::SendCheckToAdversary(CellCoord cc)
 
 void Player::SendHitToAdversary(CellCoord cc)
 {
-	adversary->SendHitToAdversary(cc);
+	adversary->ReceiveHit(cc);
 }
 
 
 void Player::SendMissToAdversary(CellCoord cc)
 {
-	adversary->SendMissToAdversary(cc);
+	adversary->ReceiveMiss(cc);
 }
 
 
 void Player::SendKillToAdversary(CellCoord cc)
 {
-	adversary->SendKillToAdversary(cc);
+	adversary->ReceiveKill(cc);
 }
 
 
@@ -36,21 +36,20 @@ void LocalPlayer::CheckIfHit(CellCoord cc)
 
 	switch (result)
 	{
-		case HIT;
-			field.Set(cc, DEAD);
-			SendHitToAdversary(cc);
-			adversary->ReceiveHit(cc);
-			break;
+	case HIT:
+		field.Set(cc, DEAD);
+		SendHitToAdversary(cc);
+		break;
 
-		case MISSED:
-			field.Set(cc, MISS);
-			SendMissToAdversary(cc);
-			break;
+	case MISSED:
+		field.Set(cc, MISS);
+		SendMissToAdversary(cc);
+		break;
 
-		case KILLED:
-			field.Set(cc, DEAD);
-			SendKillToAdversary(cc);
-			break;
+	case KILLED:
+		field.Set(cc, DEAD);
+		SendKillToAdversary(cc);
+		break;
 	}
 }
 
