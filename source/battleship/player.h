@@ -11,7 +11,7 @@ public:
 
 	void LinkAdversary(Player * p);
 	
-private:
+protected:
 	virtual void CheckIfHit(CellCoord cc) = 0;
 	virtual void ReceiveMiss(CellCoord cc) = 0;
 	virtual void ReceiveHit(CellCoord cc) = 0;
@@ -22,7 +22,7 @@ private:
 };
 
 
-class LocalPlayer
+class LocalPlayer : public Player
 {
 protected:
 	Field field;
@@ -36,7 +36,7 @@ private:
 };
 
 
-class HumanPlayer
+class HumanPlayer : LocalPlayer
 {
 private:
 	virtual void CheckIfHit(CellCoord cc);
@@ -46,7 +46,7 @@ private:
 };
 
 
-class BotPlayer
+class BotPlayer : public LocalPlayer
 {
 public:
 	virtual void SendCheckToAdversary(CellCoord cc);
@@ -62,7 +62,7 @@ private:
 };
 
 
-class RemotePlayer
+class RemotePlayer : public Player
 {
 public:
 	virtual void SendCheckToAdversary(CellCoord cc);
