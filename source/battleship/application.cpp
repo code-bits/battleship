@@ -85,11 +85,8 @@ void Application::Run()
 
         while (lag >= MS_PER_UPDATE)
         {
-            if (needUpdate)
-            {
-                Update();
-                needUpdate = true;
-            }
+
+            Update();
             lag -= MS_PER_UPDATE;
         }
 
@@ -132,7 +129,7 @@ void Application::OnLeftButtonDown()
 
 void Application::OnRightButtonDown()
 {
-    needUpdate = true;
+
 }
 
 
@@ -144,6 +141,13 @@ void Application::Update()
 
 void Application::Render(double inFrame)
 {
-   
+	Backbuffer* bb = viewport.GetBackbuffer();
+	bb->FillWithColor(RGB(200, 200, 200));
+	HDC hDC = bb->GetDC();
+
+	DrawField(hDC, testField.GetCells());
+
+
+	InvalidateRect(viewport.GetHWND(), NULL, FALSE);
 }
 

@@ -2,15 +2,36 @@
 #include "stdafx.h"
 
 
+
+Field::Field()
+{
+	for (unsigned short i=0; i<10; ++i)
+	{
+		for (unsigned short j=0; j<10; ++j)
+		{
+			cells[i][j] = BLANK;
+		}
+	}	
+}
+
+
 CellState Field::Get(CellCoord cc)
 {
 	return cells[cc.row][cc.col];
 }
 
+
 void Field::Set(CellCoord cc, CellState value)
 {
 	 cells[cc.row][cc.col] = value;
 }
+
+
+std::array<std::array<CellState, 10>, 10> Field::GetCells()
+{
+	return cells;
+}
+
 
 Outcome Field::CheckCell(CellCoord cc)
 {
@@ -25,6 +46,7 @@ Outcome Field::CheckCell(CellCoord cc)
 	}
 	return HIT;
 }
+
 
 std::list<CellCoord> Field::GetNeighbours(CellCoord target)
 {

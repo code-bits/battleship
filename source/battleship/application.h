@@ -26,7 +26,8 @@ public:
 private:
     ViewportWindow viewport;
     Mouse mouse;
-    bool needUpdate;
+
+	Field testField;
 
     
 };
