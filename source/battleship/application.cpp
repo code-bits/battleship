@@ -145,7 +145,7 @@ void Application::Render(double inFrame)
 	bb->FillWithColor(RGB(200, 200, 200));
 	HDC hDC = bb->GetDC();
 
-	DrawField(hDC, testField.GetCells());
+	//DrawField(hDC, testField.GetCells());
 
 
 	InvalidateRect(viewport.GetHWND(), NULL, FALSE);
