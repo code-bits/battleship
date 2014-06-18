@@ -5,11 +5,16 @@ LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 
 HINSTANCE hInstance;
 
+static int** field_array;
+
+
 int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszArgument, int nCmdShow)
 {
     HWND hwnd;
     MSG messages;
     WNDCLASSEX wincl;
+
+	CreateDeveloperConsole();
 
     wincl.hInstance = hThisInstance;
 	wincl.lpszClassName = L"Class1";
@@ -25,6 +30,18 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
     wincl.hbrBackground = (HBRUSH)COLOR_BACKGROUND;
 
     if(!RegisterClassEx(&wincl)) return 0;
+
+	field_array = new int*[Rows];
+	for (int i = 0; i < Rows; i++)
+	{
+		field_array[i] = new int[Columns];
+		for (int j = 0; j < Columns; j++)
+		{
+	
+			field_array[i][j] = 0;
+			//field.Set(i, j, BLANK);
+		}
+	}
 
     hwnd = CreateWindowEx (
         0,
@@ -57,25 +74,66 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 	PAINTSTRUCT ps;
 	POINT ptMouse;
 	RECT rcFieldArea;
+	Field field;
+	CellCoord cc;
 
 	rcFieldArea.top = FldAreaTop;
 	rcFieldArea.left = FldAreaLeft;
 	rcFieldArea.bottom = FldAreaBtm;
 	rcFieldArea.right = FldAreaRgt;
 
-	int** field_array = new int*[Rows];
-	for (int i = 0; i < Rows; i++)
-	{
-		field_array[i] = new int[Columns];
-		for (int j = 0; j < Columns; j++)
-		{
-			
-			field_array[i][j] = (i + j)%4;
-		}
-	}
+	/*rcFieldArea.top = 25;
+	rcFieldArea.left = 200;
+	rcFieldArea.bottom = 275;
+	rcFieldArea.right = 450;*/
+
+	
+
+	//field.Set(1, 2, ALIVE);
+	
 
 	switch (message)
 	{
+		case WM_CREATE:
+			{
+				for(int i = 0; i < 10; i++)
+				{
+					for(int j = 0; j < 10; j++)
+					{
+						cc.row = i;
+						cc.col = j;
+
+						field.Set(cc, BLANK);
+					}
+				}
+
+				//field.SetValid();
+
+				std::cout << std::endl;
+
+				for(int i = 0; i < 10; i++)
+				{
+					for(int j = 0; j < 10; j++)
+					{
+						cc.row = i;
+						cc.col = j;
+
+						field_array[i][j] = field.Get(cc);
+						std::cout << field_array[i][j] << ' ';
+					}
+					std::cout << std::endl;
+				}
+
+				
+
+				bool isValid = field.IsValid();
+				if (!isValid)
+					MessageBox(hwnd, L"The field isn't valid.", L"Error", MB_OK);
+				else
+					MessageBox(hwnd, L"The field is valid.", L"Gut", MB_OK);
+			}
+			break;
+
 		case WM_PAINT:
 			{
 				hdc = BeginPaint(hwnd, &ps);
@@ -95,13 +153,13 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 				{
 					CellCoord cCoord;
 
-					cCoord.row = (ptMouse.x - FldAreaLeft)/CellWidth;
-					cCoord.col = (ptMouse.y - FldAreaTop)/CellWidth;
+					cCoord.col = (ptMouse.x - FldAreaLeft)/CellWidth;
+					cCoord.row = (ptMouse.y - FldAreaTop)/CellWidth;
 
-					CheckCell(hwnd, cCoord, field_array);
+					MyCheckCell(hwnd, cCoord, field_array);
 					
 					hdc = GetDC(hwnd);					
-					DrawCell(hdc, field_array[cCoord.row][cCoord.col], cCoord.row * CellWidth, cCoord.col * CellWidth);
+					DrawCell(hdc, field_array[cCoord.col][cCoord.row], cCoord.col * CellWidth, cCoord.row * CellWidth);
 					ReleaseDC(hwnd, hdc);
 				}
 

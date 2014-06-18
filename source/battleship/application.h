@@ -27,7 +27,7 @@ private:
     ViewportWindow viewport;
     Mouse mouse;
 
-	Field testField;
+	//Field testField;
 
     
 };

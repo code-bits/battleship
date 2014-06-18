@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <list>
 
 #include "cell.h"
 
@@ -11,10 +12,12 @@ public:
 	CellState Get(CellCoord);
 	Outcome CheckCell(CellCoord);
 	std::array<std::array<CellState, 10>, 10> GetCells();
+	bool IsValid();
 
 private:
 	std::array<std::array<CellState, 10>, 10> cells;
 	bool IsCellKilled(CellCoord cc);
 	std::list<CellCoord> GetNeighbours(CellCoord);
 
+	int CountNeighbours(std::array<std::array<CellState, 10>, 10> array, int i, int j);
 };

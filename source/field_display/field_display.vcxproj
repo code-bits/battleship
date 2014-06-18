@@ -78,13 +78,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\battleship\field.cpp" />
     <ClCompile Include="..\battleship\field_display.cpp" />
+    <ClCompile Include="..\battleship\tools.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\battleship\field.h" />
     <ClInclude Include="..\battleship\field_display.h" />
-    <ClInclude Include="..\battleship\message.h" />
     <ClInclude Include="..\battleship\stdafx.h" />
+    <ClInclude Include="..\battleship\tools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

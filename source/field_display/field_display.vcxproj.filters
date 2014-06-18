@@ -17,6 +17,12 @@
     <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\battleship\field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\battleship\tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\battleship\field_display.h">
@@ -25,7 +31,10 @@
     <ClInclude Include="..\battleship\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\battleship\message.h">
+    <ClInclude Include="..\battleship\field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\battleship\tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

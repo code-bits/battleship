@@ -126,3 +126,79 @@ bool Field::IsCellKilled(CellCoord cc)
 	return false;
 
 }
+
+bool Field::IsValid()
+{
+	int ships[4];
+	int iCurrent = 0;
+	bool isValid = true;
+	CellCoord cc;
+
+	for (int i = 0; i < 4; i++) ships[i] = 0;
+
+	std::array<std::array <CellState, 10>, 10> inCells;
+
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			cc.row = i;
+			cc.col = j;
+
+			if(Get(cc) == BLANK)
+			{
+				inCells[i][j] = BLANK;
+			} else
+			{
+				inCells[i][j] = MISS;
+			}
+		}
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			if (inCells[i][j])
+			{
+				iCurrent = 0;
+				iCurrent += CountNeighbours(inCells, i, j);
+
+				if(iCurrent > 0)
+					++ships[iCurrent - 1];
+			}
+		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << "Ships of " << (i + 1) << " elements:" << ships[i] << std::endl;
+
+		if(ships[i] != (4 - i))
+			isValid = false;
+	}
+
+	return isValid;
+}
+
+
+int Field::CountNeighbours(std::array<std::array<CellState, 10>, 10> array, int i, int j)
+{
+	if(array[i][j] == BLANK) return 0;
+
+	int result = 1;
+
+	array[i][j] = BLANK;
+
+	if(i > 0) 
+		result += CountNeighbours(array, i-1, j);
+	if(j > 0)
+		result += CountNeighbours(array, i, j-1);
+	if(i < 9)
+		result += CountNeighbours(array, i+1, j);
+	if(j < 9)
+		result += CountNeighbours(array, i, j+1);
+
+	return result;
+}
+

@@ -1,11 +1,11 @@
 
 #include "field_display.h"
-#include "stdafx.h"
+#include "../battleship/stdafx.h"
 
-void DrawCell(HDC hdc, int value, int i, int j)
+void DrawCell(HDC hdc, int value, int iy, int jx)
 {
-	int xLeft = i + FldAreaLeft;
-	int yTop = j + FldAreaTop;
+	int xLeft = jx + FldAreaLeft;
+	int yTop = iy + FldAreaTop;
 
 	COLORREF color;
 
@@ -65,28 +65,28 @@ bool IsInArea(POINT point, RECT rect)
 }
 
 
-bool CheckCell(HWND hwnd, CellCoord cCoord, int ** field_array)
+bool MyCheckCell(HWND hwnd, CellCoord cCoord, int ** field_array)
 {
 	int value = field_array[cCoord.row][cCoord.col];
 
 	switch (value)
 	{
 		case 0:
-			MessageBox(hwnd, L"You have missed the ship!", L"Miss", MB_OK);
+			//MessageBox(hwnd, L"You have missed the ship!", L"Miss", MB_OK);
 			field_array[cCoord.row][cCoord.col] = 1;
 			break;
 
 		case 1:
-			MessageBox(hwnd, L"This cell was already accessed.", L"Double Access", MB_OK);
+			//MessageBox(hwnd, L"This cell was already accessed.", L"Double Access", MB_OK);
 			break;
 
 		case 2:
-			MessageBox(hwnd, L"The ship is on fire!", L"Hit", MB_OK);
+			//MessageBox(hwnd, L"The ship is on fire!", L"Hit", MB_OK);
 			field_array[cCoord.row][cCoord.col] = 3;
 			break;
 
 		case 3:
-			MessageBox(hwnd, L"This cell was already accessed.", L"Double Access", MB_OK);
+			//MessageBox(hwnd, L"This cell was already accessed.", L"Double Access", MB_OK);
 			break;
 
 		default:
