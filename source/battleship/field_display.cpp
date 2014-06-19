@@ -2,57 +2,57 @@
 #include "field_display.h"
 #include "stdafx.h"
 
-void DrawCell(HDC hdc, int value, int iy, int jx, int top, int left)
-{
-	int xLeft = jx + left;
-	int yTop = iy + top;
-
-	COLORREF color;
-
-	switch (value)
-	{
-		case 0:
-			color = RGB(10, 25, 75);
-			break;
-
-		case 1:
-			color = RGB(50, 75, 110);
-			break;
-
-		case 2:
-			color = RGB(250, 250, 10);
-			break;
-
-		case 3:
-			color = RGB(255, 50, 10);
-			break;
-
-		default:
-			color = RGB(255, 250, 250);
-			break;
-	}
-
-	HBRUSH hBrush = CreateSolidBrush(color);
-	HPEN strokePen = CreatePen(PS_SOLID, 1, RGB(100, 100, 100));
-	SelectObject(hdc, strokePen);
-    SelectObject(hdc, hBrush);
-	Rectangle(hdc, xLeft, yTop, xLeft + CellWidth + 1, yTop + CellWidth + 1);
-    DeleteObject(hBrush);
-	DeleteObject(strokePen);
-}
-
-
-void DrawField(HDC hdc, const std::array<std::array<CellState, 10>, 10>& cells, int top, int left)
-{
-	for (int i = 0; i < Rows; i++)
-	{
-		for (int j = 0; j < Columns; j++)
-		{
-			DrawCell(hdc, cells[i][j], i * CellWidth, j * CellWidth, top, left);
-		}
-	}
-	return;
-}
+//void DrawCell(HDC hdc, int value, int iy, int jx, int top, int left)
+//{
+//	int xLeft = jx + left;
+//	int yTop = iy + top;
+//
+//	COLORREF color;
+//
+//	switch (value)
+//	{
+//		case 0:
+//			color = RGB(10, 25, 75);
+//			break;
+//
+//		case 1:
+//			color = RGB(50, 75, 110);
+//			break;
+//
+//		case 2:
+//			color = RGB(250, 250, 10);
+//			break;
+//
+//		case 3:
+//			color = RGB(255, 50, 10);
+//			break;
+//
+//		default:
+//			color = RGB(255, 250, 250);
+//			break;
+//	}
+//
+//	HBRUSH hBrush = CreateSolidBrush(color);
+//	HPEN strokePen = CreatePen(PS_SOLID, 1, RGB(100, 100, 100));
+//	SelectObject(hdc, strokePen);
+//    SelectObject(hdc, hBrush);
+//	Rectangle(hdc, xLeft, yTop, xLeft + CellWidth + 1, yTop + CellWidth + 1);
+//    DeleteObject(hBrush);
+//	DeleteObject(strokePen);
+//}
+//
+//
+//void DrawField(HDC hdc, const std::array<std::array<CellState, 10>, 10>& cells, int top, int left)
+//{
+//	for (int i = 0; i < Rows; i++)
+//	{
+//		for (int j = 0; j < Columns; j++)
+//		{
+//			DrawCell(hdc, cells[i][j], i * CellWidth, j * CellWidth, top, left);
+//		}
+//	}
+//	return;
+//}
 
 
 bool IsInArea(POINT point, RECT rect)
@@ -100,3 +100,4 @@ bool MyCheckCell(HWND hwnd, CellCoord cCoord, int ** field_array)
 
 	return true;
 }
+

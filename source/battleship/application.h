@@ -4,6 +4,7 @@
 #include "mouse.h"
 #include "viewport_window.h"
 #include "player.h"
+#include "field_drawer.h"
 #include <list>
 #include <vector>
 
@@ -30,7 +31,6 @@ private:
 
 	LocalPlayer * firstPlayer;
 	Player * secondPlayer;
-
-    
+	FieldDrawer * leftFiledDrawer;    
 };
 

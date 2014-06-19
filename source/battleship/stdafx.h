@@ -30,3 +30,4 @@
 #include "field_display.h"
 #include "cell.h"
 #include "player.h"
+#include "field_drawer.h"

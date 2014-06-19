@@ -15,7 +15,7 @@ public:
 	const std::array<std::array<CellState, 10>, 10>& GetCells() const;
 	bool IsValid();
 
-private:
+private:	
 	std::array<std::array<CellState, 10>, 10> cells;
 	bool IsCellKilled(CellCoord cc);
 	std::list<CellCoord> GetNeighbours(CellCoord);
