@@ -38,16 +38,17 @@ void DrawCell(HDC hdc, int value, int iy, int jx)
     SelectObject(hdc, hBrush);
 	Rectangle(hdc, xLeft, yTop, xLeft + CellWidth + 1, yTop + CellWidth + 1);
     DeleteObject(hBrush);
+	DeleteObject(strokePen);
 }
 
 
-void DrawField(HDC hdc, int ** field_array)
+void DrawField(HDC hdc, const std::array<std::array<CellState, 10>, 10>& cells)
 {
 	for (int i = 0; i < Rows; i++)
 	{
 		for (int j = 0; j < Columns; j++)
 		{
-			DrawCell(hdc, field_array[i][j], i * CellWidth, j * CellWidth);
+			DrawCell(hdc, cells[i][j], i * CellWidth, j * CellWidth);
 		}
 	}
 	return;

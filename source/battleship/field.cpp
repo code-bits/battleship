@@ -27,7 +27,7 @@ void Field::Set(CellCoord cc, CellState value)
 }
 
 
-std::array<std::array<CellState, 10>, 10> Field::GetCells()
+const std::array<std::array<CellState, 10>, 10>& Field::GetCells() const
 {
 	return cells;
 }

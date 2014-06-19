@@ -3,6 +3,7 @@
 
 #include "mouse.h"
 #include "viewport_window.h"
+#include "player.h"
 #include <list>
 #include <vector>
 
@@ -27,7 +28,8 @@ private:
     ViewportWindow viewport;
     Mouse mouse;
 
-	//Field testField;
+	LocalPlayer * firstPlayer;
+	Player * secondPlayer;
 
     
 };
