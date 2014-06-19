@@ -1,13 +1,23 @@
 
 #pragma once
 
+#include "field.h"
+#include "cell.h"
+
+
 class Player
 {
 public:
+	Player();
 	void SendCheckToAdversary(CellCoord cc);
 	void SendMissToAdversary(CellCoord cc);
 	void SendHitToAdversary(CellCoord cc);
 	void SendKillToAdversary(CellCoord cc);
+
+	void SendReady();
+
+	virtual void Move();
+	virtual void Wait();
 
 	void LinkAdversary(Player * p);
 	
@@ -19,15 +29,19 @@ protected:
 
 	bool canMove;
 	Player * adversary;
+	Field personalField;
+	Field adversaryField;
 };
 
 
 class LocalPlayer : public Player
 {
+public:
+	const Field& GetField();
+
 protected:
 	Field field;
 
-private:
 	virtual void CheckIfHit(CellCoord cc);
 	virtual void ReceiveMiss(CellCoord cc);
 	virtual void ReceiveHit(CellCoord cc);
@@ -36,40 +50,22 @@ private:
 };
 
 
-class HumanPlayer : LocalPlayer
+class HumanPlayer : public LocalPlayer
 {
-private:
-	virtual void CheckIfHit(CellCoord cc);
-	virtual void ReceiveMiss(CellCoord cc);
-	virtual void ReceiveHit(CellCoord cc);
-	virtual void ReceiveKill(CellCoord cc);
+
 };
 
 
 class BotPlayer : public LocalPlayer
 {
 public:
-	virtual void SendCheckToAdversary(CellCoord cc);
-	virtual void SendMissToAdversary(CellCoord cc);
-	virtual void SendHitToAdversary(CellCoord cc);
-	virtual void SendKillToAdversary(CellCoord cc);
+	virtual void Move();
 
-private:
-	virtual void CheckIfHit(CellCoord cc);
-	virtual void ReceiveMiss(CellCoord cc);
-	virtual void ReceiveHit(CellCoord cc);
-	virtual void ReceiveKill(CellCoord cc);
 };
 
 
 class RemotePlayer : public Player
 {
-public:
-	virtual void SendCheckToAdversary(CellCoord cc);
-	virtual void SendMissToAdversary(CellCoord cc);
-	virtual void SendHitToAdversary(CellCoord cc);
-	virtual void SendKillToAdversary(CellCoord cc);
-
 private:
 	virtual void CheckIfHit(CellCoord cc);
 	virtual void ReceiveMiss(CellCoord cc);

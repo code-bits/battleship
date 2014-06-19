@@ -3,6 +3,31 @@
 #include "stdafx.h"
 
 
+Player::Player()
+{
+	canMove = false;
+	adversary = NULL;
+}
+
+
+void Player::Move()
+{
+	canMove = true;
+}
+
+
+void Player::Wait()
+{
+	canMove = false;
+}
+
+
+void Player::LinkAdversary(Player * p)
+{
+	adversary = p;
+}
+
+
 void Player::SendCheckToAdversary(CellCoord cc)
 {
 	if (canMove)
@@ -27,6 +52,12 @@ void Player::SendMissToAdversary(CellCoord cc)
 void Player::SendKillToAdversary(CellCoord cc)
 {
 	adversary->ReceiveKill(cc);
+}
+
+
+const Field& LocalPlayer::GetField()
+{
+	return field;
 }
 
 
@@ -56,20 +87,39 @@ void LocalPlayer::CheckIfHit(CellCoord cc)
 
 void LocalPlayer::ReceiveHit(CellCoord cc)
 {
-	// change adversary field
-	canMove = true;
+	adversaryField.Set(cc, DEAD);
+	Move();
 }
 
 
 void LocalPlayer::ReceiveMiss(CellCoord cc)
 {
-	// change adversary field
-	canMove = false;
+	adversaryField.Set(cc, MISS);
+	Wait();
+	adversary->Move();
 }
 
 
 void LocalPlayer::ReceiveKill(CellCoord cc)
 {
-	// change adversary field
-	canMove = true;
+	// adversaryField.SurroundKilled(cc);
+	Move();
 }
+
+
+void BotPlayer::Move()
+{
+	static int r = 0;
+	static int c = 0;
+	canMove = true;
+	CellCoord cc = {r, c};
+	SendCheckToAdversary(cc);
+	++c;
+	if (c > 9)
+	{
+		c = 0;
+		++r;
+	}
+}
+
+

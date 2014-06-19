@@ -11,7 +11,8 @@ public:
 	void Set(CellCoord, CellState);
 	CellState Get(CellCoord);
 	Outcome CheckCell(CellCoord);
-	std::array<std::array<CellState, 10>, 10> GetCells();
+	void KilledFromCell(CellCoord);
+	const std::array<std::array<CellState, 10>, 10>& GetCells() const;
 	bool IsValid();
 
 private:

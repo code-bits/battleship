@@ -16,7 +16,7 @@
 
 void DrawCell(HDC hdc, int value, int i, int j);
 
-void DrawField(HDC hdc, int ** field_array);
+void DrawField(HDC hdc, const std::array<std::array<CellState, 10>, 10>& cells);
 
 bool IsInArea(POINT point, RECT rect);
 
