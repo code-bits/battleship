@@ -59,6 +59,7 @@ void Application::SceneInit()
 	secondPlayer = new BotPlayer();
 	firstPlayer->LinkAdversary(secondPlayer);
 	secondPlayer->LinkAdversary(firstPlayer);
+	leftFiledDrawer = new FieldDrawer(50, 50, 250);
 }
 
 
@@ -148,8 +149,8 @@ void Application::Render(double inFrame)
 	bb->FillWithColor(RGB(200, 200, 200));
 	HDC hDC = bb->GetDC();
 
-	DrawField(hDC, firstPlayer->GetField().GetCells());
-
+	leftFiledDrawer->Draw(hDC, firstPlayer->GetField().GetCells());
+	
 
 	InvalidateRect(viewport.GetHWND(), NULL, FALSE);
 }
