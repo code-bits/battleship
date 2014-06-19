@@ -2,10 +2,10 @@
 #include "field_display.h"
 #include "stdafx.h"
 
-void DrawCell(HDC hdc, int value, int iy, int jx)
+void DrawCell(HDC hdc, int value, int iy, int jx, int top, int left)
 {
-	int xLeft = jx + FldAreaLeft;
-	int yTop = iy + FldAreaTop;
+	int xLeft = jx + left;
+	int yTop = iy + top;
 
 	COLORREF color;
 
@@ -42,13 +42,13 @@ void DrawCell(HDC hdc, int value, int iy, int jx)
 }
 
 
-void DrawField(HDC hdc, const std::array<std::array<CellState, 10>, 10>& cells)
+void DrawField(HDC hdc, const std::array<std::array<CellState, 10>, 10>& cells, int top, int left)
 {
 	for (int i = 0; i < Rows; i++)
 	{
 		for (int j = 0; j < Columns; j++)
 		{
-			DrawCell(hdc, cells[i][j], i * CellWidth, j * CellWidth);
+			DrawCell(hdc, cells[i][j], i * CellWidth, j * CellWidth, top, left);
 		}
 	}
 	return;
@@ -95,7 +95,7 @@ bool MyCheckCell(HWND hwnd, CellCoord cCoord, int ** field_array)
 	}
 
 	HDC hdc = GetDC(hwnd);
-	DrawCell(hdc, field_array[cCoord.row][cCoord.col], cCoord.row * CellWidth, cCoord.col * CellWidth);
+	//DrawCell(hdc, field_array[cCoord.row][cCoord.col], cCoord.row * CellWidth, cCoord.col * CellWidth, );
 	ReleaseDC(hwnd, hdc);
 
 	return true;
