@@ -56,10 +56,10 @@ void Application::Init()
 void Application::SceneInit()
 {
     firstPlayer = new HumanPlayer();
-	secondPlayer = new BotPlayer();
-	firstPlayer->LinkAdversary(secondPlayer);
-	secondPlayer->LinkAdversary(firstPlayer);
-	leftFiledDrawer = new FieldDrawer(50, 50, 250);
+    secondPlayer = new BotPlayer();
+    firstPlayer->LinkAdversary(secondPlayer);
+    secondPlayer->LinkAdversary(firstPlayer);
+    leftFiledDrawer = new FieldDrawer(50, 50, 250);
 }
 
 
@@ -112,13 +112,13 @@ void Application::GetInput(int message, WPARAM wParam, LPARAM lParam)
             mouse.Update(m.x, m.y);
         }
         break;
-	case WM_LBUTTONDOWN:
-		OnLeftButtonDown();
-		break;
+    case WM_LBUTTONDOWN:
+        OnLeftButtonDown();
+        break;
 
-	case WM_LBUTTONUP:
-		OnLeftButtonDown();
-		break;
+    case WM_LBUTTONUP:
+        OnLeftButtonDown();
+        break;
 
     case WM_MOUSEWHEEL:
         OnRightButtonDown();
@@ -150,13 +150,13 @@ void Application::Update()
 
 void Application::Render(double inFrame)
 {
-	Backbuffer* bb = viewport.GetBackbuffer();
-	bb->FillWithColor(RGB(200, 200, 200));
-	HDC hDC = bb->GetDC();
+    Backbuffer* bb = viewport.GetBackbuffer();
+    bb->FillWithColor(RGB(200, 200, 200));
+    HDC hDC = bb->GetDC();
 
-	leftFiledDrawer->Draw(hDC, firstPlayer->GetField().GetCells());
-	
+    leftFiledDrawer->Draw(hDC, firstPlayer->GetField().GetCells());
+    
 
-	InvalidateRect(viewport.GetHWND(), NULL, FALSE);
+    InvalidateRect(viewport.GetHWND(), NULL, FALSE);
 }
 

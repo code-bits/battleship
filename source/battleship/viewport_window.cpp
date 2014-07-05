@@ -29,6 +29,7 @@ void ViewportWindow::OnCreate()
     backbuffer.Init(hDC, width, height);
 
     ReleaseDC(hWnd, hDC);
+
 }
 
 

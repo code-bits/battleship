@@ -4,9 +4,9 @@
 
 
 Mouse::Mouse()
-	: x(0), y(0), dx(0), dy(0),
-	  leftPressed(false), rightPressed(false),
-	  leftDown(false), rightDown(false)
+    : x(0), y(0), dx(0), dy(0),
+      leftPressed(false), rightPressed(false),
+      leftDown(false), rightDown(false)
 { }
 
 
@@ -102,24 +102,24 @@ void Mouse::ReceiveRBtnUp()
 
 bool Mouse::WasLeftPressed()
 {
-	return leftPressed;
+    return leftPressed;
 }
 
 
 bool Mouse::WasRightPressed()
 {
-	return rightPressed;
+    return rightPressed;
 }
 
 
 bool Mouse::IsLeftDown()
 {
-	return leftDown;
+    return leftDown;
 }
 
 
 bool Mouse::IsRightDown()
 {
-	return rightDown;
+    return rightDown;
 }
 

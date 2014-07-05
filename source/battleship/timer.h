@@ -10,6 +10,6 @@ public:
     static double frequency;
 private:
     long long startedAt;
-    
+
 };
 

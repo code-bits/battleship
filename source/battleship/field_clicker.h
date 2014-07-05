@@ -3,13 +3,13 @@
 class FieldClicker
 {
 public:
-	FieldClicker(int top, int left, int fieldSize);
-	bool CheckClick(int x, int y, CellCoord * cc);
+    FieldClicker(int top, int left, int fieldSize);
+    bool CheckClick(int x, int y, CellCoord * cc);
 
 private:
-	int top;
-	int	left;
-	int size;
+    int top;
+    int left;
+    int size;
 
-	bool IsInArea(int x, int y);
+    bool IsInArea(int x, int y);
 };

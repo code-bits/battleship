@@ -30,16 +30,16 @@ public:
     void RightButtonUp();
     void Move();
 
-	void ReceiveLBtnDown();
-	void ReceiveLBtnUp();
+    void ReceiveLBtnDown();
+    void ReceiveLBtnUp();
 
-	void ReceiveRBtnDown();
-	void ReceiveRBtnUp();
+    void ReceiveRBtnDown();
+    void ReceiveRBtnUp();
 
-	bool WasLeftPressed();
-	bool WasRightPressed();
-	bool IsLeftDown();
-	bool IsRightDown();
+    bool WasLeftPressed();
+    bool WasRightPressed();
+    bool IsLeftDown();
+    bool IsRightDown();
 
     void RegisterListener(IMouseListener* listener);
 
@@ -49,10 +49,10 @@ private:
     int dx;
     int dy;
 
-	bool leftDown;
-	bool rightDown;
-	bool leftPressed;
-	bool rightPressed;
+    bool leftDown;
+    bool rightDown;
+    bool leftPressed;
+    bool rightPressed;
 
     std::vector<IMouseListener*> listeners;
 };

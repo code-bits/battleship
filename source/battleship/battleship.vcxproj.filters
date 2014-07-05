@@ -54,9 +54,6 @@
     <ClInclude Include="error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="events.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="field.h">
       <Filter>Header Files</Filter>
     </ClInclude>

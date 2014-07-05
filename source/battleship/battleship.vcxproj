@@ -103,7 +103,6 @@
     <ClInclude Include="message.h" />
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="error.h" />
-    <ClInclude Include="events.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="player.h" />
