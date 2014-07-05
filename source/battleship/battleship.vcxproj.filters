@@ -10,9 +10,6 @@
     <ClCompile Include="field.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="field_display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="message.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,13 +54,7 @@
     <ClInclude Include="error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="events.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="field.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="field_display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="message.h">

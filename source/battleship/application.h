@@ -29,8 +29,8 @@ private:
     ViewportWindow viewport;
     Mouse mouse;
 
-	LocalPlayer * firstPlayer;
-	Player * secondPlayer;
-	FieldDrawer * leftFiledDrawer;    
+    LocalPlayer * firstPlayer;
+    Player * secondPlayer;
+    FieldDrawer * leftFiledDrawer;    
 };
 

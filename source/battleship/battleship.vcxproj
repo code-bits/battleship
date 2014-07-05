@@ -79,7 +79,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="field_clicker.cpp" />
-    <ClCompile Include="field_display.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="field_drawer.cpp" />
     <ClCompile Include="message.cpp" />
@@ -99,13 +98,11 @@
   <ItemGroup>
     <ClInclude Include="cell.h" />
     <ClInclude Include="field_clicker.h" />
-    <ClInclude Include="field_display.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="field_drawer.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="error.h" />
-    <ClInclude Include="events.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="player.h" />

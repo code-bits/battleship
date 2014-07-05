@@ -3,6 +3,13 @@
 #include "stdafx.h"
 
 
+Mouse::Mouse()
+    : x(0), y(0), dx(0), dy(0),
+      leftPressed(false), rightPressed(false),
+      leftDown(false), rightDown(false)
+{ }
+
+
 void Mouse::Update(int x_, int y_)
 {
     dx = x_ - x;
@@ -65,5 +72,54 @@ void Mouse::Move()
     {
         (*itr)->OnMouseMove(x, y);
     }
+}
+
+
+
+void Mouse::ReceiveLBtnDown()
+{
+
+}
+
+
+void Mouse::ReceiveLBtnUp()
+{
+
+}
+
+
+void Mouse::ReceiveRBtnDown()
+{
+
+}
+
+
+void Mouse::ReceiveRBtnUp()
+{
+
+}
+
+
+bool Mouse::WasLeftPressed()
+{
+    return leftPressed;
+}
+
+
+bool Mouse::WasRightPressed()
+{
+    return rightPressed;
+}
+
+
+bool Mouse::IsLeftDown()
+{
+    return leftDown;
+}
+
+
+bool Mouse::IsRightDown()
+{
+    return rightDown;
 }
 

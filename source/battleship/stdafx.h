@@ -27,7 +27,7 @@
 #include "tools.h"
 #include "field.h"
 #include "message.h"
-#include "field_display.h"
 #include "cell.h"
 #include "player.h"
 #include "field_drawer.h"
+#include "field_clicker.h"

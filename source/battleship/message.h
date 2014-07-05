@@ -6,11 +6,11 @@
 class Message
 {
 public:
-	Message(std::string , CellCoord );
+    Message(std::string , CellCoord );
     ~Message();
-	static Message Decode(std::string );
-	static std::string Encode(Message );
+    static Message Decode(std::string );
+    static std::string Encode(Message );
 private:
-	std::string action;
-	CellCoord cellCoords;
+    std::string action;
+    CellCoord cellCoords;
 };
