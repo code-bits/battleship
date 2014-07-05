@@ -112,9 +112,13 @@ void Application::GetInput(int message, WPARAM wParam, LPARAM lParam)
             mouse.Update(m.x, m.y);
         }
         break;
-    case WM_LBUTTONDOWN:
-        OnLeftButtonDown();
-        break;
+	case WM_LBUTTONDOWN:
+		OnLeftButtonDown();
+		break;
+
+	case WM_LBUTTONUP:
+		OnLeftButtonDown();
+		break;
 
     case WM_MOUSEWHEEL:
         OnRightButtonDown();
@@ -128,6 +132,7 @@ void Application::GetInput(int message, WPARAM wParam, LPARAM lParam)
 
 void Application::OnLeftButtonDown()
 {
+
 }
 
 

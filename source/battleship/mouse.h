@@ -16,7 +16,7 @@ public:
 class Mouse
 {
 public:
-    Mouse() : x(0), y(0), dx(0), dy(0) { }
+    Mouse();
 
     void Update(int x_, int y_);
     int X() { return x; }
@@ -30,6 +30,17 @@ public:
     void RightButtonUp();
     void Move();
 
+	void ReceiveLBtnDown();
+	void ReceiveLBtnUp();
+
+	void ReceiveRBtnDown();
+	void ReceiveRBtnUp();
+
+	bool WasLeftPressed();
+	bool WasRightPressed();
+	bool IsLeftDown();
+	bool IsRightDown();
+
     void RegisterListener(IMouseListener* listener);
 
 private:
@@ -37,5 +48,11 @@ private:
     int y;
     int dx;
     int dy;
+
+	bool leftDown;
+	bool rightDown;
+	bool leftPressed;
+	bool rightPressed;
+
     std::vector<IMouseListener*> listeners;
 };

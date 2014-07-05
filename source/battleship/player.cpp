@@ -33,7 +33,7 @@ void Player::SendCheckToAdversary(CellCoord cc)
 	if (canMove)
 	{
 		adversary->CheckIfHit(cc);
-	}	
+	}
 }
 
 
