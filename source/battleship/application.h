@@ -2,12 +2,13 @@
 #pragma once
 
 #include "mouse.h"
-#include "viewport_window.h"
 #include "player.h"
 #include "field_drawer.h"
 #include <list>
 #include <vector>
 
+class FrameWindow;
+class ViewportWindow;
 
 class Application
 {
@@ -26,7 +27,8 @@ public:
     virtual void OnRightButtonDown();
 
 private:
-    ViewportWindow viewport;
+    FrameWindow * frame;
+    ViewportWindow * viewport;
     Mouse mouse;
 
     LocalPlayer * firstPlayer;

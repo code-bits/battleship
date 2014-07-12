@@ -5,16 +5,16 @@
 class Window
 {
 public:
-    Window() { hWnd = NULL; }
+    Window();
 
-    virtual ~Window() { }
-
-    virtual bool CreateEx(DWORD dwExStyle,
+    void CreateEx(DWORD dwExStyle,
         LPCTSTR lpszClass, LPCTSTR lpszName,
         DWORD dwStyle,
         int x, int y,
         int nWidth, int nHeight,
-        HWND hParent, HMENU hMenu, HINSTANCE hInst);
+        HWND hParent, HMENU hMenu, HINSTANCE hInstance);
+
+    virtual ~Window() { }
 
     bool RegClass(LPCTSTR lpszClass, HINSTANCE hInst);
 
@@ -33,7 +33,7 @@ public:
 protected:
     HWND hWnd;
 
-    virtual LRESULT WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    virtual LRESULT WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
     virtual void OnCreate() { }
