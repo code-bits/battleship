@@ -2,12 +2,14 @@
 #pragma once
 
 #include "mouse.h"
-#include "viewport_window.h"
 #include "player.h"
-#include "field_drawer.h"
 #include <list>
 #include <vector>
 
+class FrameWindow;
+class ViewportWindow;
+
+class Field;
 
 class Application
 {
@@ -18,7 +20,7 @@ public:
     virtual void SceneInit();
     virtual void Run();
 
-    virtual void GetInput(int message, WPARAM wParam, LPARAM lParam);
+    virtual void GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam);
     virtual void Update();
     virtual void Render(double inFrame);
 
@@ -26,11 +28,12 @@ public:
     virtual void OnRightButtonDown();
 
 private:
-    ViewportWindow viewport;
+    FrameWindow * frame;
+    ViewportWindow * viewport;
     Mouse mouse;
 
     LocalPlayer * firstPlayer;
     Player * secondPlayer;
-    FieldDrawer * leftFiledDrawer;    
+    Field * field;
 };
 

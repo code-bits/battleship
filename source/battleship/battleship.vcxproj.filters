@@ -37,10 +37,7 @@
     <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="field_drawer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="field_clicker.cpp">
+    <ClCompile Include="frame_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,10 +81,10 @@
     <ClInclude Include="cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="field_drawer.h">
+    <ClInclude Include="frame_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="field_clicker.h">
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -100,5 +97,8 @@
       <UniqueIdentifier>{25455901-1934-4ff0-b0ae-cf3fea55cb11}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="battleship.rc" />
   </ItemGroup>
 </Project>

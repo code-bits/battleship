@@ -78,9 +78,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="field_clicker.cpp" />
     <ClCompile Include="field.cpp" />
-    <ClCompile Include="field_drawer.cpp" />
+    <ClCompile Include="frame_window.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="application.cpp" />
@@ -97,20 +96,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
-    <ClInclude Include="field_clicker.h" />
     <ClInclude Include="field.h" />
-    <ClInclude Include="field_drawer.h" />
+    <ClInclude Include="frame_window.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="viewport_window.h" />
     <ClInclude Include="window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="battleship.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

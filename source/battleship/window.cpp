@@ -3,17 +3,22 @@
 #include "stdafx.h"
 
 
+Window::Window()
+{
+    hWnd = NULL;
+}
 
-bool Window::CreateEx(DWORD dwExStyle,
-                      LPCTSTR lpszClass, LPCTSTR lpszName,
-                      DWORD dwStyle,
-                      int x, int y,
-                      int nWidth, int nHeight,
-                      HWND hParent, HMENU hMenu, HINSTANCE hInstance)
+
+void Window::CreateEx(DWORD dwExStyle,
+               LPCTSTR lpszClass, LPCTSTR lpszName,
+               DWORD dwStyle,
+               int x, int y,
+               int nWidth, int nHeight,
+               HWND hParent, HMENU hMenu, HINSTANCE hInstance)
 {
     if (!RegClass(lpszClass, hInstance))
     {
-        return false;
+        throw Error("Could not register window class!");
     }
 
     MDICREATESTRUCT mdic;
@@ -22,12 +27,15 @@ bool Window::CreateEx(DWORD dwExStyle,
 
 
     hWnd = CreateWindowEx(dwExStyle,
-                            lpszClass, lpszName,
-                            dwStyle,
-                            x, y, nWidth, nHeight,
-                            hParent, hMenu, hInstance, &mdic);
+        lpszClass, lpszName,
+        dwStyle,
+        x, y, nWidth, nHeight,
+        hParent, hMenu, hInstance, &mdic);
 
-    return (hWnd != NULL);
+    if (!hWnd)
+    {
+        throw Error("Error while creating the window!");
+    }
 }
 
 
@@ -143,5 +151,3 @@ LRESULT CALLBACK Window::WindowProc(HWND hWnd_, UINT message, WPARAM wParam, LPA
         return DefWindowProc(hWnd_, message, wParam, lParam);
     }
 }
-
-

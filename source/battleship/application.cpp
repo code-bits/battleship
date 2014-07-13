@@ -11,7 +11,7 @@ Application::Application()
 
 Application::~Application()
 {
-   
+
 }
 
 
@@ -32,34 +32,40 @@ void Application::Init()
     rct.right = 800;
     rct.bottom = 600;
 
-    AdjustWindowRectEx(&rct, WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL, TRUE, WS_EX_OVERLAPPEDWINDOW);
+    AdjustWindowRectEx(&rct, WS_OVERLAPPEDWINDOW, TRUE, WS_EX_OVERLAPPEDWINDOW);
 
-    bool res = viewport.CreateEx(WS_EX_OVERLAPPEDWINDOW,
+    HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(NULL);
+    HMENU hMenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MENU1));
+
+    frame = new FrameWindow();
+
+    frame->CreateEx(WS_EX_OVERLAPPEDWINDOW,
         L"Battleship",
         L"Battleship",
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0,
         rct.right - rct.left, rct.bottom - rct.top,
-        NULL, NULL,
-        GetModuleHandle(NULL));
+        NULL, hMenu, hInstance);
 
-    if (!res)
-    {
-        throw Error("Could not create the window!");
-    }
+    viewport = new ViewportWindow();
 
-    viewport.Show(SW_SHOW);
-    viewport.Update();
+    viewport->CreateEx(0,
+        L"Viewport",
+        L"Viewport",
+        WS_CHILD|WS_VISIBLE,
+        10, 50,
+        780, 580,
+        frame->GetHWND(), NULL, hInstance);
+
+
+    frame->Show(SW_SHOW);
+    frame->Update();
 }
 
 
 void Application::SceneInit()
 {
-    firstPlayer = new HumanPlayer();
-    secondPlayer = new BotPlayer();
-    firstPlayer->LinkAdversary(secondPlayer);
-    secondPlayer->LinkAdversary(firstPlayer);
-    leftFiledDrawer = new FieldDrawer(50, 50, 250);
+    field = new Field();
 }
 
 
@@ -83,13 +89,11 @@ void Application::Run()
             if (msg.message == WM_QUIT) { running = false; }
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            GetInput(msg.message, msg.wParam, msg.lParam);
-
+            GetInput(msg.hwnd, msg.message, msg.wParam, msg.lParam);
         }
 
         while (lag >= MS_PER_UPDATE)
         {
-
             Update();
             lag -= MS_PER_UPDATE;
         }
@@ -99,29 +103,26 @@ void Application::Run()
 }
 
 
-void Application::GetInput(int message, WPARAM wParam, LPARAM lParam)
+void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_MOUSEMOVE:
-        {
-            POINT m;
-            m.x = GET_X_LPARAM(lParam);
-            m.y = GET_Y_LPARAM(lParam);
-
-            mouse.Update(m.x, m.y);
-        }
-        break;
     case WM_LBUTTONDOWN:
-        OnLeftButtonDown();
-        break;
-
-    case WM_LBUTTONUP:
-        OnLeftButtonDown();
-        break;
-
-    case WM_MOUSEWHEEL:
-        OnRightButtonDown();
+        if (hWnd == viewport->GetHWND())
+        {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+            std::cout << "Clicked in viewport! " << x << " " << y << std::endl;
+            FieldDisplayParams fdp;
+            fdp.x = 20;
+            fdp.y = 20;
+            fdp.size = 200;
+            CellCoord cc;
+            if (field->Click(x, y, fdp, &cc))
+            {
+                std::cout << cc.row << " " << cc.col << std::endl;
+            }
+        }
         break;
 
     default:
@@ -144,19 +145,24 @@ void Application::OnRightButtonDown()
 
 void Application::Update()
 {
-   
+
 }
 
 
 void Application::Render(double inFrame)
 {
-    Backbuffer* bb = viewport.GetBackbuffer();
-    bb->FillWithColor(RGB(200, 200, 200));
+    Backbuffer* bb = viewport->GetBackbuffer();
+    bb->FillWithColor(RGB(200, 100, 100));
     HDC hDC = bb->GetDC();
 
-    leftFiledDrawer->Draw(hDC, firstPlayer->GetField().GetCells());
-    
 
-    InvalidateRect(viewport.GetHWND(), NULL, FALSE);
+    FieldDisplayParams fdp;
+    fdp.x = 20;
+    fdp.y = 20;
+    fdp.size = 200;
+
+    field->Draw(hDC, fdp);
+
+    InvalidateRect(viewport->GetHWND(), NULL, FALSE);
 }
 
