@@ -49,7 +49,7 @@ void Application::Init()
 
     viewport = new ViewportWindow();
 
-    viewport->CreateEx(WS_EX_OVERLAPPEDWINDOW,
+    viewport->CreateEx(0,
         L"Viewport",
         L"Viewport",
         WS_CHILD|WS_VISIBLE,
@@ -65,7 +65,7 @@ void Application::Init()
 
 void Application::SceneInit()
 {
-
+    field = new Field();
 }
 
 
@@ -89,7 +89,7 @@ void Application::Run()
             if (msg.message == WM_QUIT) { running = false; }
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            GetInput(msg.message, msg.wParam, msg.lParam);
+            GetInput(msg.hwnd, msg.message, msg.wParam, msg.lParam);
         }
 
         while (lag >= MS_PER_UPDATE)
@@ -103,10 +103,27 @@ void Application::Run()
 }
 
 
-void Application::GetInput(int message, WPARAM wParam, LPARAM lParam)
+void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_LBUTTONDOWN:
+        if (hWnd == viewport->GetHWND())
+        {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+            std::cout << "Clicked in viewport! " << x << " " << y << std::endl;
+            FieldDisplayParams fdp;
+            fdp.x = 20;
+            fdp.y = 20;
+            fdp.size = 200;
+            CellCoord cc;
+            if (field->Click(x, y, fdp, &cc))
+            {
+                std::cout << cc.row << " " << cc.col << std::endl;
+            }
+        }
+        break;
 
     default:
         return;
@@ -138,11 +155,13 @@ void Application::Render(double inFrame)
     bb->FillWithColor(RGB(200, 100, 100));
     HDC hDC = bb->GetDC();
 
-    //leftFiledDrawer->Draw(hDC, firstPlayer->GetField().GetCells());
-    static int a = 10;
-    Rectangle(hDC, a, 10, a+100, 100);
-    ++a;
-    a %= 500;
+
+    FieldDisplayParams fdp;
+    fdp.x = 20;
+    fdp.y = 20;
+    fdp.size = 200;
+
+    field->Draw(hDC, fdp);
 
     InvalidateRect(viewport->GetHWND(), NULL, FALSE);
 }

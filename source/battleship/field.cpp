@@ -202,3 +202,68 @@ int Field::CountNeighbours(std::array<std::array<CellState, 10>, 10> array, int 
     return result;
 }
 
+
+void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
+{
+    int cellSize = fdp.size/10;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            int xLeft = i * cellSize + fdp.x;
+            int yTop = j * cellSize + fdp.y;
+
+            COLORREF color;
+
+            switch (cells[i][j])
+            {
+            case 0:
+                color = RGB(10, 25, 75);
+                break;
+
+            case 1:
+                color = RGB(50, 75, 110);
+                break;
+
+            case 2:
+                color = RGB(250, 250, 10);
+                break;
+
+            case 3:
+                color = RGB(255, 50, 10);
+                break;
+
+            default:
+                color = RGB(255, 250, 250);
+                break;
+            }
+
+            HBRUSH hBrush = CreateSolidBrush(color);
+            HPEN strokePen = CreatePen(PS_SOLID, 1, RGB(100, 100, 100));
+            SelectObject(hDC, strokePen);
+            SelectObject(hDC, hBrush);
+            Rectangle(hDC, xLeft, yTop, xLeft + cellSize + 1, yTop + cellSize + 1);
+            DeleteObject(hBrush);
+            DeleteObject(strokePen);
+        }
+    }
+    return;
+}
+
+
+
+
+bool Field::Click(int x, int y, const FieldDisplayParams & fdp, CellCoord * cc)
+{
+    if (x >= fdp.x && x < fdp.x + fdp.size
+        && y >= fdp.y && y < fdp.y + fdp.size)
+    {
+        cc->col = (x - fdp.x)*10/fdp.size;
+        cc->row = (y - fdp.y)*10/fdp.size;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

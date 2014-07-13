@@ -34,7 +34,5 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include "message.h"
 #include "cell.h"
 #include "player.h"
-#include "field_drawer.h"
-#include "field_clicker.h"
 
 #include "resource.h"
