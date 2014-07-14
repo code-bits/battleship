@@ -65,7 +65,21 @@ void Application::Init()
 
 void Application::SceneInit()
 {
-    field = new Field();
+    mainPlayer = new HumanPlayer();
+    adversaryPlayer = new BotPlayer();
+    mainPlayer->LinkAdversary(adversaryPlayer);
+    adversaryPlayer->LinkAdversary(mainPlayer);
+
+    int rows[6] = {1,2,4,6,6,6};
+    int cols[6] = {1,1,2,1,2,3};
+
+    for (int i=0; i<6; ++i)
+    {
+        mainPlayer->personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
+        adversaryPlayer->personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
+    }
+    
+    mainPlayer->Move();
 }
 
 
@@ -118,9 +132,17 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
             fdp.y = 20;
             fdp.size = 200;
             CellCoord cc;
-            if (field->Click(x, y, fdp, &cc))
+            if (mainPlayer->personalField.Click(x, y, fdp, &cc))
             {
                 std::cout << cc.row << " " << cc.col << std::endl;
+                mainPlayer->personalField.Set(cc, ALIVE);
+            }
+
+            fdp.x = 400;
+            if (mainPlayer->adversaryField.Click(x, y, fdp, &cc))
+            {
+                std::cout << cc.row << " " << cc.col << std::endl;
+                mainPlayer->SendCheckToAdversary(cc);
             }
         }
         break;
@@ -145,7 +167,20 @@ void Application::OnRightButtonDown()
 
 void Application::Update()
 {
-
+    static int r = 0;
+    static int c = 0;
+    CellCoord cc(r, c);
+    adversaryPlayer->SendCheckToAdversary(cc);
+    ++c;
+    if (c > 9)
+    {
+        c = 0;
+        ++r;
+        if (r > 9)
+        {
+            r = 0;
+        }
+    }
 }
 
 
@@ -161,7 +196,10 @@ void Application::Render(double inFrame)
     fdp.y = 20;
     fdp.size = 200;
 
-    field->Draw(hDC, fdp);
+    mainPlayer->personalField.Draw(hDC, fdp);
+
+    fdp.x = 400;
+    mainPlayer->adversaryField.Draw(hDC, fdp);
 
     InvalidateRect(viewport->GetHWND(), NULL, FALSE);
 }

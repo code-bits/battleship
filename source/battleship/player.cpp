@@ -55,30 +55,24 @@ void Player::SendKillToAdversary(CellCoord cc)
 }
 
 
-const Field& LocalPlayer::GetField()
-{
-    return field;
-}
-
-
 void LocalPlayer::CheckIfHit(CellCoord cc)
 {
-    Outcome result = field.CheckCell(cc);
+    Outcome result = personalField.CheckCell(cc);
 
     switch (result)
     {
     case HIT:
-        field.Set(cc, DEAD);
+        personalField.Set(cc, DEAD);
         SendHitToAdversary(cc);
         break;
 
     case MISSED:
-        field.Set(cc, MISS);
+        personalField.Set(cc, MISS);
         SendMissToAdversary(cc);
         break;
 
     case KILLED:
-        field.Set(cc, DEAD);
+        personalField.Set(cc, DEAD);
         SendKillToAdversary(cc);
         break;
     }
@@ -109,17 +103,7 @@ void LocalPlayer::ReceiveKill(CellCoord cc)
 
 void BotPlayer::Move()
 {
-    static int r = 0;
-    static int c = 0;
     canMove = true;
-    CellCoord cc = {r, c};
-    SendCheckToAdversary(cc);
-    ++c;
-    if (c > 9)
-    {
-        c = 0;
-        ++r;
-    }
 }
 
 

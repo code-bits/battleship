@@ -37,11 +37,10 @@ protected:
 class LocalPlayer : public Player
 {
 public:
-    const Field& GetField();
+    Field personalField;
+    Field adversaryField;
 
 protected:
-    Field field;
-
     virtual void CheckIfHit(CellCoord cc);
     virtual void ReceiveMiss(CellCoord cc);
     virtual void ReceiveHit(CellCoord cc);
