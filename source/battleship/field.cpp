@@ -215,7 +215,7 @@ void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
 
             COLORREF color;
 
-            switch (cells[i][j])
+            switch (cells[j][i])
             {
             case 0:
                 color = RGB(10, 25, 75);
@@ -237,14 +237,17 @@ void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
                 color = RGB(255, 250, 250);
                 break;
             }
-
+            
             HBRUSH hBrush = CreateSolidBrush(color);
             HPEN strokePen = CreatePen(PS_SOLID, 1, RGB(100, 100, 100));
-            SelectObject(hDC, strokePen);
-            SelectObject(hDC, hBrush);
+            HPEN hOldPen = (HPEN)SelectObject(hDC, strokePen);
+            HBRUSH hOldBr = (HBRUSH)SelectObject(hDC, hBrush);
             Rectangle(hDC, xLeft, yTop, xLeft + cellSize + 1, yTop + cellSize + 1);
+            SelectObject(hDC, hOldBr);
+            SelectObject(hDC, hOldPen);
             DeleteObject(hBrush);
             DeleteObject(strokePen);
+            
         }
     }
     return;

@@ -32,8 +32,7 @@ private:
     ViewportWindow * viewport;
     Mouse mouse;
 
-    LocalPlayer * firstPlayer;
-    Player * secondPlayer;
-    Field * field;
+    LocalPlayer * mainPlayer;
+    LocalPlayer * adversaryPlayer;
 };
 
