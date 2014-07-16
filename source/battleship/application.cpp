@@ -147,6 +147,24 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
+    case WM_COMMAND:
+        switch (LOWORD (wParam))
+        {
+        case IDM_GAME_NEW:
+            NewGameParams ngp;
+            if (DialogBoxParam(
+                (HINSTANCE)GetWindowLong(frame->GetHWND(), GWL_HINSTANCE),
+                MAKEINTRESOURCE(IDD_NEWGAME_DIALOG),
+                frame->GetHWND(),
+                NewGameDlgProc,
+                (LPARAM) & ngp))
+            {
+                std::cout << (ngp.ipAddress) << std::endl;
+            }
+            break;
+        }
+        break;
+
     default:
         return;
     }

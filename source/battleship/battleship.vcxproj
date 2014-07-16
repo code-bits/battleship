@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dialogboxes.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="frame_window.cpp" />
     <ClCompile Include="message.cpp" />
@@ -96,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
+    <ClInclude Include="dialogboxes.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="frame_window.h" />
     <ClInclude Include="message.h" />
