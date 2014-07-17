@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,7 +85,9 @@
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="network.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="service.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -105,8 +107,10 @@
     <ClInclude Include="error.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="network.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="service.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tools.h" />
