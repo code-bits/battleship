@@ -11,7 +11,7 @@ Application::Application()
 
 Application::~Application()
 {
-
+    WSACleanup();
 }
 
 
@@ -78,7 +78,7 @@ void Application::SceneInit()
         mainPlayer->personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
         adversaryPlayer->personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
     }
-    
+
     mainPlayer->Move();
 }
 
@@ -159,9 +159,26 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                 NewGameDlgProc,
                 (LPARAM) & ngp))
             {
-                std::cout << (ngp.ipAddress) << std::endl;
+                switch (ngp.gameMode)
+                {
+                case ONLINE_HOST:
+                    Service::Provide(new Server(frame->GetHWND()));
+                    break;
+                case ONLINE_CLIENT:
+                    Service::Provide(new Client(frame->GetHWND()));
+                    break;
+                }
             }
             break;
+        case IDM_GAME_QUIT:
+            SendMessage(frame->GetHWND(), WM_CLOSE, 0, 0);
+            break;
+        }
+        break;
+
+    case WM_SOCKET:
+        {
+            Service::Network()->HandleMessages(wParam, lParam);
         }
         break;
 

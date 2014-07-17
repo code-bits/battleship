@@ -38,8 +38,8 @@ BOOL CALLBACK NewGameDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
                     << FOURTH_IPADDRESS(ipData);
 
                 ss >> (ngp->ipAddress);
-                EndDialog(hDlg, TRUE);
             }
+            EndDialog(hDlg, TRUE);
             return TRUE;
 
         case IDCANCEL:

@@ -4,6 +4,7 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
+#include <winsock2.h>
 #include <windows.h>
 #include <windowsx.h>
 #include <commctrl.h>
@@ -35,5 +36,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include "cell.h"
 #include "player.h"
 #include "dialogboxes.h"
+#include "service.h"
+#include "network.h"
 
 #include "resource.h"
