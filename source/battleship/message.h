@@ -7,10 +7,10 @@ class Message
 {
 public:
     Message(std::string , CellCoord );
-    ~Message();
-    static Message Decode(std::string );
-    static std::string Encode(Message );
-private:
+    static Message Decode(std::string s);
+    static std::string Encode(Message msg);
+
     std::string action;
     CellCoord cellCoords;
+
 };
