@@ -1,17 +1,19 @@
 
 #pragma once
 
-#include "mouse.h"
-#include "player.h"
+#include "network.h"
 #include <list>
 #include <vector>
 
 class FrameWindow;
 class ViewportWindow;
+class Player;
+class BotPlayer;
+class RemotePlayer;
+class Game;
 
-class Field;
 
-class Application
+class Application : public SocketListener
 {
 public:
     Application();
@@ -27,12 +29,15 @@ public:
     virtual void OnLeftButtonDown();
     virtual void OnRightButtonDown();
 
+    virtual void OnNetworkRead(const std::string & msg);
+
 private:
     FrameWindow * frame;
     ViewportWindow * viewport;
     Mouse mouse;
 
-    LocalPlayer * mainPlayer;
-    LocalPlayer * adversaryPlayer;
+    Player * mainPlayer;
+    RemotePlayer * adversaryPlayer;
+    Game * game;
 };
 

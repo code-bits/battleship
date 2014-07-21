@@ -7,12 +7,6 @@ Message::Message(std::string s, CellCoord coords)
     cellCoords = coords;
 }
 
-Message::~Message()
-{
-    action.clear();
-    cellCoords.row = 0;
-    cellCoords.col = 0;
-}
 
 Message Message::Decode(std::string s)
 {

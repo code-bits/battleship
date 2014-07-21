@@ -38,5 +38,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include "dialogboxes.h"
 #include "service.h"
 #include "network.h"
+#include "game.h"
+#include "action.h"
 
 #include "resource.h"

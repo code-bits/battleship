@@ -6,7 +6,13 @@
 Player::Player()
 {
     canMove = false;
-    adversary = NULL;
+    int rows[6] = {1,2,4,6,6,6};
+    int cols[6] = {1,1,2,1,2,3};
+
+    for (int i=0; i<6; ++i)
+    {
+        personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
+    }
 }
 
 
@@ -22,40 +28,13 @@ void Player::Wait()
 }
 
 
-void Player::LinkAdversary(Player * p)
+bool Player::CanMove()
 {
-    adversary = p;
+    return canMove;
 }
 
 
-void Player::SendCheckToAdversary(CellCoord cc)
-{
-    if (canMove)
-    {
-        adversary->CheckIfHit(cc);
-    }
-}
-
-
-void Player::SendHitToAdversary(CellCoord cc)
-{
-    adversary->ReceiveHit(cc);
-}
-
-
-void Player::SendMissToAdversary(CellCoord cc)
-{
-    adversary->ReceiveMiss(cc);
-}
-
-
-void Player::SendKillToAdversary(CellCoord cc)
-{
-    adversary->ReceiveKill(cc);
-}
-
-
-void LocalPlayer::CheckIfHit(CellCoord cc)
+void Player::CheckIfHit(CellCoord cc, Player * adversary, Game * game)
 {
     Outcome result = personalField.CheckCell(cc);
 
@@ -63,47 +42,89 @@ void LocalPlayer::CheckIfHit(CellCoord cc)
     {
     case HIT:
         personalField.Set(cc, DEAD);
-        SendHitToAdversary(cc);
+        game->ReportHitTo(adversary, this, cc);
         break;
 
     case MISSED:
         personalField.Set(cc, MISS);
-        SendMissToAdversary(cc);
+        game->ReportMissTo(adversary, this, cc);
         break;
 
     case KILLED:
         personalField.Set(cc, DEAD);
-        SendKillToAdversary(cc);
+        game->ReportKillTo(adversary, this, cc);
         break;
     }
 }
 
 
-void LocalPlayer::ReceiveHit(CellCoord cc)
+void Player::OnHit(CellCoord cc, Player * adversary, Game * game)
 {
     adversaryField.Set(cc, DEAD);
-    Move();
 }
 
 
-void LocalPlayer::ReceiveMiss(CellCoord cc)
+void Player::OnMiss(CellCoord cc, Player * adversary, Game * game)
 {
     adversaryField.Set(cc, MISS);
-    Wait();
-    adversary->Move();
 }
 
 
-void LocalPlayer::ReceiveKill(CellCoord cc)
+void Player::OnKill(CellCoord cc, Player * adversary, Game * game)
 {
+    adversaryField.Set(cc, DEAD);
     // adversaryField.SurroundKilled(cc);
-    Move();
 }
 
 
-void BotPlayer::Move()
+void BotPlayer::Update(Player * adversary, Game * game)
 {
-    canMove = true;
+    static int r = 0;
+    static int c = 0;
+    if (CanMove())
+    {
+        game->CheckCellOf(adversary, this, CellCoord(r, c));
+
+        ++c;
+
+        if (c > 9)
+        {
+            c = 0;
+            ++r;
+        }
+
+        if (r > 9)
+        {
+            r = 0;
+        }
+    }
 }
 
 
+void RemotePlayer::CheckIfHit(CellCoord cc, Player * adversary, Game * game)
+{
+    std::cout << "Execute Remote check!\n";
+    Message msg("check", cc);
+    Service::Network()->Send(Message::Encode(msg));
+}
+
+
+void RemotePlayer::OnHit(CellCoord cc, Player * adversary, Game * game)
+{
+    Message msg("hit", cc);
+    Service::Network()->Send(Message::Encode(msg));
+}
+
+
+void RemotePlayer::OnMiss(CellCoord cc, Player * adversary, Game * game)
+{
+    Message msg("miss", cc);
+    Service::Network()->Send(Message::Encode(msg));
+}
+
+
+void RemotePlayer::OnKill(CellCoord cc, Player * adversary, Game * game)
+{
+    Message msg("kill", cc);
+    Service::Network()->Send(Message::Encode(msg));
+}
