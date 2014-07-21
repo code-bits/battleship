@@ -4,70 +4,41 @@
 #include "field.h"
 #include "cell.h"
 
+class Game;
 
 class Player
 {
 public:
     Player();
-    void SendCheckToAdversary(CellCoord cc);
-    void SendMissToAdversary(CellCoord cc);
-    void SendHitToAdversary(CellCoord cc);
-    void SendKillToAdversary(CellCoord cc);
 
-    void SendReady();
+    void Move();
+    void Wait();
+    bool CanMove();
 
-    virtual void Move();
-    virtual void Wait();
+    virtual void CheckIfHit(CellCoord cc, Player * adversary, Game * game);
+    virtual void OnMiss(CellCoord cc, Player * adversary, Game * game);
+    virtual void OnHit(CellCoord cc, Player * adversary, Game * game);
+    virtual void OnKill(CellCoord cc, Player * adversary, Game * game);
 
-    void LinkAdversary(Player * p);
-    
+    Field personalField;
+    Field adversaryField;
+
 protected:
-    virtual void CheckIfHit(CellCoord cc) = 0;
-    virtual void ReceiveMiss(CellCoord cc) = 0;
-    virtual void ReceiveHit(CellCoord cc) = 0;
-    virtual void ReceiveKill(CellCoord cc) = 0;
 
     bool canMove;
-    Player * adversary;
-    Field personalField;
-    Field adversaryField;
 };
 
 
-class LocalPlayer : public Player
+class BotPlayer : public Player
 {
 public:
-    Field personalField;
-    Field adversaryField;
-
-protected:
-    virtual void CheckIfHit(CellCoord cc);
-    virtual void ReceiveMiss(CellCoord cc);
-    virtual void ReceiveHit(CellCoord cc);
-    virtual void ReceiveKill(CellCoord cc);
-
+    virtual void Update(Player * adversary, Game * game);
 };
-
-
-class HumanPlayer : public LocalPlayer
-{
-
-};
-
-
-class BotPlayer : public LocalPlayer
-{
-public:
-    virtual void Move();
-
-};
-
 
 class RemotePlayer : public Player
 {
-private:
-    virtual void CheckIfHit(CellCoord cc);
-    virtual void ReceiveMiss(CellCoord cc);
-    virtual void ReceiveHit(CellCoord cc);
-    virtual void ReceiveKill(CellCoord cc);
+    virtual void CheckIfHit(CellCoord cc, Player * adversary, Game * game);
+    virtual void OnMiss(CellCoord cc, Player * adversary, Game * game);
+    virtual void OnHit(CellCoord cc, Player * adversary, Game * game);
+    virtual void OnKill(CellCoord cc, Player * adversary, Game * game);
 };
