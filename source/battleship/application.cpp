@@ -5,7 +5,9 @@
 
 Application::Application()
 {
-
+    mainPlayer = NULL;
+    adversaryPlayer = NULL;
+    game = NULL;
 }
 
 
@@ -65,21 +67,7 @@ void Application::Init()
 
 void Application::SceneInit()
 {
-    mainPlayer = new HumanPlayer();
-    adversaryPlayer = new BotPlayer();
-    mainPlayer->LinkAdversary(adversaryPlayer);
-    adversaryPlayer->LinkAdversary(mainPlayer);
 
-    int rows[6] = {1,2,4,6,6,6};
-    int cols[6] = {1,1,2,1,2,3};
-
-    for (int i=0; i<6; ++i)
-    {
-        mainPlayer->personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
-        adversaryPlayer->personalField.Set(CellCoord(rows[i], cols[i]), ALIVE);
-    }
-
-    mainPlayer->Move();
 }
 
 
@@ -126,7 +114,6 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
         {
             int x = GET_X_LPARAM(lParam);
             int y = GET_Y_LPARAM(lParam);
-            std::cout << "Clicked in viewport! " << x << " " << y << std::endl;
             FieldDisplayParams fdp;
             fdp.x = 20;
             fdp.y = 20;
@@ -134,15 +121,17 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
             CellCoord cc;
             if (mainPlayer->personalField.Click(x, y, fdp, &cc))
             {
-                std::cout << cc.row << " " << cc.col << std::endl;
                 mainPlayer->personalField.Set(cc, ALIVE);
             }
 
             fdp.x = 400;
             if (mainPlayer->adversaryField.Click(x, y, fdp, &cc))
             {
-                std::cout << cc.row << " " << cc.col << std::endl;
-                mainPlayer->SendCheckToAdversary(cc);
+                if (mainPlayer->CanMove())
+                {
+                    std::cout << "Move " << cc.row << " " << cc.col << std::endl;
+                    game->CheckCellOf(adversaryPlayer, mainPlayer, cc);
+                }
             }
         }
         break;
@@ -163,13 +152,24 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                 {
                 case ONLINE_HOST:
                     Service::Provide(new Server(frame->GetHWND()));
+                    Service::Network()->SetListener(this);
+                    mainPlayer = new Player();
+                    adversaryPlayer = new RemotePlayer();
+                    game = new Game();
                     break;
+
                 case ONLINE_CLIENT:
                     Service::Provide(new Client(frame->GetHWND()));
+                    Service::Network()->SetListener(this);
+                    mainPlayer = new Player();
+                    adversaryPlayer = new RemotePlayer();
+                    game = new Game();
+                    mainPlayer->Move();
                     break;
                 }
             }
             break;
+
         case IDM_GAME_QUIT:
             SendMessage(frame->GetHWND(), WM_CLOSE, 0, 0);
             break;
@@ -188,6 +188,33 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
 }
 
 
+void Application::OnNetworkRead(const std::string & msgString)
+{
+    std::cout << "Received message: " << msgString << std::endl;
+    Message msg = Message::Decode(msgString);
+
+    if (msg.action == "check")
+    {
+        game->CheckCellOf(mainPlayer, adversaryPlayer, msg.cellCoords);
+    }
+
+    if (msg.action == "miss")
+    {
+        game->ReportMissTo(mainPlayer, adversaryPlayer, msg.cellCoords);
+    }
+
+    if (msg.action == "hit")
+    {
+        game->ReportHitTo(mainPlayer, adversaryPlayer, msg.cellCoords);
+    }
+
+    if (msg.action == "kill")
+    {
+        game->ReportKillTo(mainPlayer, adversaryPlayer, msg.cellCoords);
+    }
+}
+
+
 void Application::OnLeftButtonDown()
 {
 
@@ -202,19 +229,10 @@ void Application::OnRightButtonDown()
 
 void Application::Update()
 {
-    static int r = 0;
-    static int c = 0;
-    CellCoord cc(r, c);
-    adversaryPlayer->SendCheckToAdversary(cc);
-    ++c;
-    if (c > 9)
+    //adversaryPlayer->Update(mainPlayer, game);
+    if (game)
     {
-        c = 0;
-        ++r;
-        if (r > 9)
-        {
-            r = 0;
-        }
+        game->Update();
     }
 }
 
@@ -225,16 +243,18 @@ void Application::Render(double inFrame)
     bb->FillWithColor(RGB(200, 100, 100));
     HDC hDC = bb->GetDC();
 
+    if (mainPlayer)
+    {
+        FieldDisplayParams fdp;
+        fdp.x = 20;
+        fdp.y = 20;
+        fdp.size = 200;
 
-    FieldDisplayParams fdp;
-    fdp.x = 20;
-    fdp.y = 20;
-    fdp.size = 200;
+        mainPlayer->personalField.Draw(hDC, fdp);
 
-    mainPlayer->personalField.Draw(hDC, fdp);
-
-    fdp.x = 400;
-    mainPlayer->adversaryField.Draw(hDC, fdp);
+        fdp.x = 400;
+        mainPlayer->adversaryField.Draw(hDC, fdp);
+    }
 
     InvalidateRect(viewport->GetHWND(), NULL, FALSE);
 }
