@@ -3,6 +3,9 @@
 #include "stdafx.h"
 
 
+#define IDC_START_BTN 11001
+
+
 Application::Application()
 {
     mainPlayer = NULL;
@@ -31,8 +34,8 @@ void Application::Init()
 
     rct.left = 0;
     rct.top = 0;
-    rct.right = 800;
-    rct.bottom = 600;
+    rct.right = 600;
+    rct.bottom = 490;
 
     AdjustWindowRectEx(&rct, WS_OVERLAPPEDWINDOW, TRUE, WS_EX_OVERLAPPEDWINDOW);
 
@@ -55,9 +58,17 @@ void Application::Init()
         L"Viewport",
         L"Viewport",
         WS_CHILD|WS_VISIBLE,
-        10, 50,
-        780, 580,
+        0, 50,
+        620, 440,
         frame->GetHWND(), NULL, hInstance);
+
+    CreateWindow(L"button",
+        L"Start",
+        WS_CHILD|WS_VISIBLE|BS_DEFPUSHBUTTON,
+        10, 10, 100, 20,
+        frame->GetHWND(),
+        (HMENU)IDC_START_BTN,
+        hInstance, 0);
 
 
     frame->Show(SW_SHOW);
@@ -80,6 +91,7 @@ void Application::Run()
     double lag = 0.0;
     const double MS_PER_UPDATE = 16.66666;
     Timer timer;
+    needUpdate = false;
 
     while (running)
     {
@@ -91,53 +103,34 @@ void Application::Run()
             if (msg.message == WM_QUIT) { running = false; }
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            GetInput(msg.hwnd, msg.message, msg.wParam, msg.lParam);
+            GetInput(msg);
         }
 
-        while (lag >= MS_PER_UPDATE)
+        // while (lag >= MS_PER_UPDATE)
+        if (needUpdate)
         {
+            //std::cout << "Update ";
             Update();
+            //needUpdate = false;
             lag -= MS_PER_UPDATE;
         }
-
+        //std::cout << "Render\n";
         Render(lag/MS_PER_UPDATE);
     }
 }
 
 
-void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+void Application::GetInput(const MSG & msg)
 {
-    switch (message)
+    if (msg.hwnd == viewport->GetHWND())
     {
-    case WM_LBUTTONDOWN:
-        if (hWnd == viewport->GetHWND())
-        {
-            int x = GET_X_LPARAM(lParam);
-            int y = GET_Y_LPARAM(lParam);
-            FieldDisplayParams fdp;
-            fdp.x = 20;
-            fdp.y = 20;
-            fdp.size = 200;
-            CellCoord cc;
-            if (mainPlayer->personalField.Click(x, y, fdp, &cc))
-            {
-                mainPlayer->personalField.Set(cc, ALIVE);
-            }
+        if (game) { game->HandleInput(msg); }
+    }
 
-            fdp.x = 400;
-            if (mainPlayer->adversaryField.Click(x, y, fdp, &cc))
-            {
-                if (mainPlayer->CanMove())
-                {
-                    std::cout << "Move " << cc.row << " " << cc.col << std::endl;
-                    game->CheckCellOf(adversaryPlayer, mainPlayer, cc);
-                }
-            }
-        }
-        break;
-
+    switch (msg.message)
+    {
     case WM_COMMAND:
-        switch (LOWORD (wParam))
+        switch (LOWORD(msg.wParam))
         {
         case IDM_GAME_NEW:
             NewGameParams ngp;
@@ -150,12 +143,17 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
             {
                 switch (ngp.gameMode)
                 {
+                case OFFLINE:
+                    game = new Game(new Player(), new BotPlayer());
+                    std::cout << "New game!\n";
+                    break;
+
                 case ONLINE_HOST:
                     Service::Provide(new Server(frame->GetHWND()));
                     Service::Network()->SetListener(this);
                     mainPlayer = new Player();
                     adversaryPlayer = new RemotePlayer();
-                    game = new Game();
+                    game = new Game(mainPlayer, adversaryPlayer);
                     break;
 
                 case ONLINE_CLIENT:
@@ -163,7 +161,7 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                     Service::Network()->SetListener(this);
                     mainPlayer = new Player();
                     adversaryPlayer = new RemotePlayer();
-                    game = new Game();
+                    game = new Game(mainPlayer, adversaryPlayer);
                     mainPlayer->Move();
                     break;
                 }
@@ -176,9 +174,30 @@ void Application::GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
+    case WM_BUTTON_FEEDBACK:
+        switch (LOWORD(msg.wParam))
+        {
+        case IDC_START_BTN:
+            if (game)
+            {
+                game->PrepareStart();
+            }
+            break;
+
+        default:
+            break;
+        }
+
+    case WM_KEYDOWN:
+        if (msg.wParam == VK_SPACE)
+        {
+            needUpdate = true;
+        }
+        break;
+
     case WM_SOCKET:
         {
-            Service::Network()->HandleMessages(wParam, lParam);
+            Service::Network()->HandleMessages(msg.wParam, msg.lParam);
         }
         break;
 
@@ -215,17 +234,6 @@ void Application::OnNetworkRead(const std::string & msgString)
 }
 
 
-void Application::OnLeftButtonDown()
-{
-
-}
-
-
-void Application::OnRightButtonDown()
-{
-
-}
-
 
 void Application::Update()
 {
@@ -243,17 +251,9 @@ void Application::Render(double inFrame)
     bb->FillWithColor(RGB(200, 100, 100));
     HDC hDC = bb->GetDC();
 
-    if (mainPlayer)
+    if (game)
     {
-        FieldDisplayParams fdp;
-        fdp.x = 20;
-        fdp.y = 20;
-        fdp.size = 200;
-
-        mainPlayer->personalField.Draw(hDC, fdp);
-
-        fdp.x = 400;
-        mainPlayer->adversaryField.Draw(hDC, fdp);
+        game->Draw(hDC);
     }
 
     InvalidateRect(viewport->GetHWND(), NULL, FALSE);
