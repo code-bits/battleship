@@ -205,13 +205,14 @@ int Field::CountNeighbours(std::array<std::array<CellState, 10>, 10> array, int 
 
 void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
 {
-    int cellSize = fdp.size/10;
+    int cellSizeX = fdp.cx/10;
+    int cellSizeY = fdp.cy/10;
     for (int i = 0; i < 10; i++)
     {
         for (int j = 0; j < 10; j++)
         {
-            int xLeft = i * cellSize + fdp.x;
-            int yTop = j * cellSize + fdp.y;
+            int xLeft = i * cellSizeX + fdp.x;
+            int yTop = j * cellSizeY + fdp.y;
 
             COLORREF color;
 
@@ -242,7 +243,7 @@ void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
             HPEN strokePen = CreatePen(PS_SOLID, 1, RGB(100, 100, 100));
             HPEN hOldPen = (HPEN)SelectObject(hDC, strokePen);
             HBRUSH hOldBr = (HBRUSH)SelectObject(hDC, hBrush);
-            Rectangle(hDC, xLeft, yTop, xLeft + cellSize + 1, yTop + cellSize + 1);
+            Rectangle(hDC, xLeft, yTop, xLeft + cellSizeX + 1, yTop + cellSizeY + 1);
             SelectObject(hDC, hOldBr);
             SelectObject(hDC, hOldPen);
             DeleteObject(hBrush);
@@ -250,6 +251,13 @@ void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
             
         }
     }
+    HBRUSH hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+    HPEN strokePen = (HPEN)GetStockObject(WHITE_PEN);
+    HPEN hOldPen = (HPEN)SelectObject(hDC, strokePen);
+    HBRUSH hOldBr = (HBRUSH)SelectObject(hDC, hBrush);
+    Rectangle(hDC, fdp.x, fdp.y, fdp.x + fdp.cx + 1, fdp.y + fdp.cy + 1);
+    SelectObject(hDC, hOldBr);
+    SelectObject(hDC, hOldPen);
     return;
 }
 
@@ -258,11 +266,11 @@ void Field::Draw(HDC hDC, const FieldDisplayParams & fdp)
 
 bool Field::Click(int x, int y, const FieldDisplayParams & fdp, CellCoord * cc)
 {
-    if (x >= fdp.x && x < fdp.x + fdp.size
-        && y >= fdp.y && y < fdp.y + fdp.size)
+    if (x >= fdp.x && x < fdp.x + fdp.cx
+        && y >= fdp.y && y < fdp.y + fdp.cy)
     {
-        cc->col = (x - fdp.x)*10/fdp.size;
-        cc->row = (y - fdp.y)*10/fdp.size;
+        cc->col = (x - fdp.x)*10/fdp.cx;
+        cc->row = (y - fdp.y)*10/fdp.cy;
         return true;
     }
     else

@@ -22,12 +22,9 @@ public:
     virtual void SceneInit();
     virtual void Run();
 
-    virtual void GetInput(HWND hWnd, int message, WPARAM wParam, LPARAM lParam);
+    virtual void GetInput(const MSG & msg);
     virtual void Update();
     virtual void Render(double inFrame);
-
-    virtual void OnLeftButtonDown();
-    virtual void OnRightButtonDown();
 
     virtual void OnNetworkRead(const std::string & msg);
 
@@ -39,5 +36,6 @@ private:
     Player * mainPlayer;
     RemotePlayer * adversaryPlayer;
     Game * game;
+    bool needUpdate;
 };
 

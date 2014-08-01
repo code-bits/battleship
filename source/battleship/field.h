@@ -8,7 +8,8 @@ struct FieldDisplayParams
 {
     int x;
     int y;
-    int size;
+    int cx;
+    int cy;
 };
 
 class Field

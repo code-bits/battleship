@@ -3,6 +3,8 @@
 
 #include "window.h"
 
+#define WM_BUTTON_FEEDBACK (WM_USER + 2)
+
 class FrameWindow : public Window
 {
 private:

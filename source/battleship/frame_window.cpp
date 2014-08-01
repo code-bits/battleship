@@ -12,7 +12,7 @@ void FrameWindow::FillWndClassEx(WNDCLASSEX & wcex)
 
 void FrameWindow::OnCreate()
 {
-    CreateWindow(L"button", L"button", WS_CHILD|WS_VISIBLE, 10, 10, 100, 20, hWnd, 0, 0, 0);
+
 }
 
 
@@ -32,6 +32,12 @@ LRESULT FrameWindow::WndProc(HWND hWnd_, UINT message, WPARAM wParam, LPARAM lPa
 {
     switch (message)
     {
+    case WM_COMMAND:
+        if (HIWORD(wParam) == BN_CLICKED)
+        {
+            PostMessage(hWnd, WM_BUTTON_FEEDBACK, wParam, lParam);
+        }
+        break;
 
     default:
         return Window::WndProc(hWnd_, message, wParam, lParam);
