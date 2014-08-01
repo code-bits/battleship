@@ -14,6 +14,7 @@ public:
     void Move();
     void Wait();
     bool CanMove();
+    virtual void Update(Player * adversary, Game * game) { }
 
     virtual void CheckIfHit(CellCoord cc, Player * adversary, Game * game);
     virtual void OnMiss(CellCoord cc, Player * adversary, Game * game);
